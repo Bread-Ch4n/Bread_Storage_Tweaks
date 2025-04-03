@@ -1,0 +1,89 @@
+﻿using HarmonyLib;
+using Il2CppScheduleOne.Storage;
+using MelonLoader;
+using MelonLoader.Utils;
+
+namespace Bread_Storage_Tweaks;
+
+public class Main : MelonMod
+{
+    private static readonly string PreferencePath = Path.Combine(MelonEnvironment.UserDataDirectory, "Bread_Storage_Tweaks");
+    private static MelonPreferences_Category? _storageCategory;
+    private static MelonPreferences_Entry<int>? _storageBriefcaseSlotAmount;
+    private static MelonPreferences_Entry<int>? _storageLargeStorageRackSlotAmount;
+    private static MelonPreferences_Entry<int>? _storageMediumStorageRackSlotAmount;
+    private static MelonPreferences_Entry<int>? _storageSmallStorageRackSlotAmount;
+    private static MelonPreferences_Entry<int>? _storageBriefcaseRowAmount;
+    private static MelonPreferences_Entry<int>? _storageLargeStorageRackRowAmount;
+    private static MelonPreferences_Entry<int>? _storageMediumStorageRackRowAmount;
+    private static MelonPreferences_Entry<int>? _storageSmallStorageRackRowAmount;
+    public override void OnInitializeMelon()
+    {
+        Directory.CreateDirectory(PreferencePath);
+
+        _storageCategory = MelonPreferences.CreateCategory("Storage Tweaks");
+        _storageCategory.SetFilePath(Path.Combine(PreferencePath, "Storage.cfg"));
+
+        _storageBriefcaseSlotAmount = _storageCategory.CreateEntry("Briefcase Inventory Slot Amount", 4,
+            description:
+            "[0-20] Do not make this smaller or remove the mod. You will loose the items from the extra slots.");
+        _storageLargeStorageRackSlotAmount = _storageCategory.CreateEntry("Large Storage Rack Inventory Slot Amount", 8,
+            description:
+            "[0-20] Do not make this smaller or remove the mod. You will loose the items from the extra slots.");
+        _storageMediumStorageRackSlotAmount = _storageCategory.CreateEntry("Medium Storage Rack Inventory Slot Amount",
+            6,
+            description:
+            "[0-20] Do not make this smaller or remove the mod. You will loose the items from the extra slots.");
+        _storageSmallStorageRackSlotAmount = _storageCategory.CreateEntry("Small Storage Rack Inventory Slot Amount", 4,
+            description:
+            "[0-20] Do not make this smaller or remove the mod. You will loose the items from the extra slots.");
+        if (_storageBriefcaseSlotAmount.Value > 20) _storageBriefcaseSlotAmount.Value = 20;
+        if (_storageLargeStorageRackSlotAmount.Value > 20) _storageLargeStorageRackSlotAmount.Value = 20;
+        if (_storageMediumStorageRackSlotAmount.Value > 20) _storageMediumStorageRackSlotAmount.Value = 20;
+        if (_storageSmallStorageRackSlotAmount.Value > 20) _storageSmallStorageRackSlotAmount.Value = 20;
+
+        _storageBriefcaseRowAmount = _storageCategory.CreateEntry("Briefcase Inventory Row Amount", 1,
+            description:
+            "The amount of rows for the storage slots");
+        _storageLargeStorageRackRowAmount = _storageCategory.CreateEntry("Large Storage Rack Inventory Row Amount", 2);
+        _storageMediumStorageRackRowAmount = _storageCategory.CreateEntry("Medium Storage Rack Inventory Row Amount",
+            2
+            );
+        _storageSmallStorageRackRowAmount = _storageCategory.CreateEntry("Small Storage Rack Inventory Row Amount", 2);
+
+        var h = new HarmonyLib.Harmony("Bread_Storage_Tweaks");
+
+       h.PatchAll(typeof(StoragePatches));
+    }
+
+    private class StoragePatches
+    {
+        [HarmonyPatch(typeof(StorageEntity), "Awake")]
+        [HarmonyPrefix]
+        private static void StoragePatch(StorageEntity __instance)
+        {
+            if (__instance == null) return;
+
+            var entityName = __instance.StorageEntityName;
+            if (string.IsNullOrEmpty(entityName)) return;
+
+            __instance.DisplayRowCount = entityName switch
+            {
+                "Briefcase" => _storageBriefcaseRowAmount!.Value,
+                "Large Storage Rack" => _storageLargeStorageRackRowAmount!.Value,
+                "Medium Storage Rack" => _storageMediumStorageRackRowAmount!.Value,
+                "Small Storage Rack" => _storageSmallStorageRackRowAmount!.Value,
+                _ => __instance.DisplayRowCount
+            };
+
+            __instance.SlotCount = entityName switch
+            {
+                "Briefcase" => _storageBriefcaseSlotAmount!.Value,
+                "Large Storage Rack" => _storageLargeStorageRackSlotAmount!.Value,
+                "Medium Storage Rack" => _storageMediumStorageRackSlotAmount!.Value,
+                "Small Storage Rack" => _storageSmallStorageRackSlotAmount!.Value,
+                _ => __instance.DisplayRowCount
+            };
+        }
+    }
+}
