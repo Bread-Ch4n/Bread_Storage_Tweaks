@@ -35,6 +35,7 @@
       </Reference>
       <Reference Include="UnityEngine.CoreModule">
         <HintPath>..\..\..\..\..\SteamLibrary\steamapps\common\Schedule I\MelonLoader\Il2CppAssemblies\UnityEngine.CoreModule.dll</HintPath>
+        <Private>False</Private>
       </Reference>
     </ItemGroup>
 </Project>

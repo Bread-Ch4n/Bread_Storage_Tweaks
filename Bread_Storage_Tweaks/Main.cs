@@ -82,7 +82,7 @@ public class Main : MelonMod
                 "Large Storage Rack" => _storageLargeStorageRackSlotAmount!.Value,
                 "Medium Storage Rack" => _storageMediumStorageRackSlotAmount!.Value,
                 "Small Storage Rack" => _storageSmallStorageRackSlotAmount!.Value,
-                _ => __instance.DisplayRowCount
+                _ => __instance.SlotCount
             };
         }
     }
