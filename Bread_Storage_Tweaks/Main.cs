@@ -34,12 +34,15 @@ public class Main : MelonMod
             __instance.SlotCount = entityName switch
             {
                 "Briefcase" => Extra.BriefcaseSa!.Value,
+                "Coffee Table" => Extra.CoffeeTableSa!.Value,
+                "Dead Drop" => Extra.DeadDropSa!.Value,
+                "Delivery Bay" => Extra.DeliveryBaySa!.Value,
+                "Display Cabinet" => Extra.DisplayCabinetSa!.Value,
                 "Large Storage Rack" => StorageRacks.LargeRsa!.Value,
                 "Medium Storage Rack" => StorageRacks.MediumRsa!.Value,
-                "Small Storage Rack" => StorageRacks.SmallRsa!.Value,
-                "Delivery Bay" => Extra.DeliveryBaySa!.Value,
-                "Dead Drop" => Extra.DeadDropSa!.Value,
                 "Safe" => Extra.SafeSa!.Value,
+                "Small Storage Rack" => StorageRacks.SmallRsa!.Value,
+                "Table" => Extra.TableSa!.Value,
                 "Trunk" => Cars.GetSA(__instance),
                 _ => __instance.SlotCount
             };
@@ -47,12 +50,15 @@ public class Main : MelonMod
             __instance.DisplayRowCount = entityName switch
             {
                 "Briefcase" => Extra.BriefcaseRa!.Value,
+                "Coffee Table" => Extra.CoffeeRa!.Value,
+                "Dead Drop" => Extra.DeadDropRa!.Value,
+                "Delivery Bay" => Extra.DeliveryBayRa!.Value,
+                "Display Cabinet" => Extra.DisplayCabinetRa!.Value,
                 "Large Storage Rack" => StorageRacks.LargeRra!.Value,
                 "Medium Storage Rack" => StorageRacks.MediumRra!.Value,
-                "Small Storage Rack" => StorageRacks.SmallRra!.Value,
-                "Delivery Bay" => Extra.DeliveryBayRa!.Value,
-                "Dead Drop" => Extra.DeadDropRa!.Value,
                 "Safe" => Extra.SafeRa!.Value,
+                "Small Storage Rack" => StorageRacks.SmallRra!.Value,
+                "Table" => Extra.TableRa!.Value,
                 "Trunk" => Cars.GetRA(__instance),
                 _ => __instance.DisplayRowCount
             };
