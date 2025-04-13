@@ -44,6 +44,7 @@ public class Main : MelonMod
                 "Small Storage Rack" => StorageRacks.SmallRsa!.Value,
                 "Table" => Extra.TableSa!.Value,
                 "Trunk" => Cars.GetSA(__instance),
+                "Wall-Mounted Shelf" => Extra.WallMountedShelfSa!.Value,
                 _ => __instance.SlotCount
             };
 
@@ -60,6 +61,7 @@ public class Main : MelonMod
                 "Small Storage Rack" => StorageRacks.SmallRra!.Value,
                 "Table" => Extra.TableRa!.Value,
                 "Trunk" => Cars.GetRA(__instance),
+                "Wall-Mounted Shelf" => Extra.WallMountedShelfRa!.Value,
                 _ => __instance.DisplayRowCount
             };
         }
