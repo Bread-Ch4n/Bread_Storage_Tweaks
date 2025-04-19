@@ -5,77 +5,77 @@ namespace Bread_Storage_Tweaks.Preferences.Classes;
 
 public static class Cars
 {
-    private static MelonPreferences_Category? _carSaCategory;
-    public static MelonPreferences_Entry<int>? ShitBoxSa;
-    public static MelonPreferences_Entry<int>? Suvsa;
-    public static MelonPreferences_Entry<int>? SedanSa;
-    public static MelonPreferences_Entry<int>? PickupSa;
-    public static MelonPreferences_Entry<int>? CoupeSa;
-    public static MelonPreferences_Entry<int>? VanSa;
+    private static MelonPreferences_Category? _carSlotAmountCategory;
+    public static MelonPreferences_Entry<int>? ShitBoxSlotAmount;
+    private static MelonPreferences_Entry<int>? _suvSlotAmount;
+    private static MelonPreferences_Entry<int>? _sedanSlotAmount;
+    private static MelonPreferences_Entry<int>? _pickupSlotAmount;
+    private static MelonPreferences_Entry<int>? _coupeSlotAmount;
+    private static MelonPreferences_Entry<int>? _vanSlotAmount;
 
 
-    private static MelonPreferences_Category? _carRCategory;
-    public static MelonPreferences_Entry<int>? ShitBoxRa;
-    public static MelonPreferences_Entry<int>? Suvra;
-    public static MelonPreferences_Entry<int>? SedanRa;
-    public static MelonPreferences_Entry<int>? PickupRa;
-    public static MelonPreferences_Entry<int>? CoupeRa;
-    public static MelonPreferences_Entry<int>? VanRa;
+    private static MelonPreferences_Category? _carRowAmountCategory;
+    public static MelonPreferences_Entry<int>? ShitBoxRowAmount;
+    private static MelonPreferences_Entry<int>? _suvRowAmount;
+    private static MelonPreferences_Entry<int>? _sedanRowAmount;
+    private static MelonPreferences_Entry<int>? _pickupRowAmount;
+    private static MelonPreferences_Entry<int>? _coupeRowAmount;
+    private static MelonPreferences_Entry<int>? _vanRowAmount;
 
 
     public static void Init()
     {
-        _carSaCategory = MelonPreferences.CreateCategory("Car Slots");
-        _carSaCategory.SetFilePath(Path.Combine(Utils.PreferencePath, "Cars.cfg"));
+        _carSlotAmountCategory = MelonPreferences.CreateCategory("Car Slots");
+        _carSlotAmountCategory.SetFilePath(Path.Combine(Utils.PreferencePath, "Cars.cfg"));
 
-        ShitBoxSa = _carSaCategory.CreateEntry("Shitbox Slot Amount", 5,
+        ShitBoxSlotAmount = _carSlotAmountCategory.CreateEntry("Shitbox Slot Amount", 5,
             description:
             "Do not make any values smaller or remove the mod. You will loose the items from the extra slots.\nThe max slot value is 20!");
-        Suvsa = _carSaCategory.CreateEntry("SUV Slot Amount", 5);
-        SedanSa = _carSaCategory.CreateEntry("Sedan Slot Amount", 5);
-        PickupSa = _carSaCategory.CreateEntry("Pickup Slot Amount", 8);
-        CoupeSa = _carSaCategory.CreateEntry("Coupe Slot Amount", 4);
-        VanSa = _carSaCategory.CreateEntry("Van Slot Amount", 16);
+        _suvSlotAmount = _carSlotAmountCategory.CreateEntry("SUV Slot Amount", 5);
+        _sedanSlotAmount = _carSlotAmountCategory.CreateEntry("Sedan Slot Amount", 5);
+        _pickupSlotAmount = _carSlotAmountCategory.CreateEntry("Pickup Slot Amount", 8);
+        _coupeSlotAmount = _carSlotAmountCategory.CreateEntry("Coupe Slot Amount", 4);
+        _vanSlotAmount = _carSlotAmountCategory.CreateEntry("Van Slot Amount", 16);
 
         List<MelonPreferences_Entry<int>> sa =
         [
-            ShitBoxSa, Suvsa, SedanSa,
-            PickupSa, CoupeSa, VanSa
+            ShitBoxSlotAmount, _suvSlotAmount, _sedanSlotAmount,
+            _pickupSlotAmount, _coupeSlotAmount, _vanSlotAmount
         ];
         foreach (var saEntry in sa.Where(saEntry => saEntry.Value > 20)) saEntry.Value = 20;
 
-        _carRCategory = MelonPreferences.CreateCategory("Car Rows");
-        _carRCategory.SetFilePath(Path.Combine(Utils.PreferencePath, "Cars.cfg"));
+        _carRowAmountCategory = MelonPreferences.CreateCategory("Car Rows");
+        _carRowAmountCategory.SetFilePath(Path.Combine(Utils.PreferencePath, "Cars.cfg"));
 
-        ShitBoxRa = _carRCategory.CreateEntry("Shitbox Row Amount", 1);
-        Suvra = _carRCategory.CreateEntry("SUV Row Amount", 1);
-        SedanRa = _carRCategory.CreateEntry("Sedan Amount", 1);
-        PickupRa = _carRCategory.CreateEntry("Pickup Row Amount", 2);
-        CoupeRa = _carRCategory.CreateEntry("Coupe Row Amount", 1);
-        VanRa = _carRCategory.CreateEntry("Van Row Amount", 2);
+        ShitBoxRowAmount = _carRowAmountCategory.CreateEntry("Shitbox Row Amount", 1);
+        _suvRowAmount = _carRowAmountCategory.CreateEntry("SUV Row Amount", 1);
+        _sedanRowAmount = _carRowAmountCategory.CreateEntry("Sedan Amount", 1);
+        _pickupRowAmount = _carRowAmountCategory.CreateEntry("Pickup Row Amount", 2);
+        _coupeRowAmount = _carRowAmountCategory.CreateEntry("Coupe Row Amount", 1);
+        _vanRowAmount = _carRowAmountCategory.CreateEntry("Van Row Amount", 2);
     }
 
     public static int GetSA(StorageEntity storageEntity) =>
         storageEntity.name switch
         {
-            _ when storageEntity.name.Contains("Shitbox") => ShitBoxSa!.Value,
-            _ when storageEntity.name.Contains("SUV") => Suvsa!.Value,
-            _ when storageEntity.name.Contains("Sedan") => SedanSa!.Value,
-            _ when storageEntity.name.Contains("Pickup") => PickupSa!.Value,
-            _ when storageEntity.name.Contains("Coupe") => CoupeSa!.Value,
-            _ when storageEntity.name.Contains("Van") => VanSa!.Value,
+            _ when storageEntity.name.Contains("Shitbox") => ShitBoxSlotAmount!.Value,
+            _ when storageEntity.name.Contains("SUV") => _suvSlotAmount!.Value,
+            _ when storageEntity.name.Contains("Sedan") => _sedanSlotAmount!.Value,
+            _ when storageEntity.name.Contains("Pickup") => _pickupSlotAmount!.Value,
+            _ when storageEntity.name.Contains("Coupe") => _coupeSlotAmount!.Value,
+            _ when storageEntity.name.Contains("Van") => _vanSlotAmount!.Value,
             _ => storageEntity.SlotCount
         };
 
     public static int GetRA(StorageEntity storageEntity) =>
         storageEntity.name switch
         {
-            _ when storageEntity.name.Contains("Shitbox") => ShitBoxRa!.Value,
-            _ when storageEntity.name.Contains("SUV") => Suvra!.Value,
-            _ when storageEntity.name.Contains("Sedan") => SedanRa!.Value,
-            _ when storageEntity.name.Contains("Pickup") => PickupRa!.Value,
-            _ when storageEntity.name.Contains("Coupe") => CoupeRa!.Value,
-            _ when storageEntity.name.Contains("Van") => VanRa!.Value,
+            _ when storageEntity.name.Contains("Shitbox") => ShitBoxRowAmount!.Value,
+            _ when storageEntity.name.Contains("SUV") => _suvRowAmount!.Value,
+            _ when storageEntity.name.Contains("Sedan") => _sedanRowAmount!.Value,
+            _ when storageEntity.name.Contains("Pickup") => _pickupRowAmount!.Value,
+            _ when storageEntity.name.Contains("Coupe") => _coupeRowAmount!.Value,
+            _ when storageEntity.name.Contains("Van") => _vanRowAmount!.Value,
             _ => storageEntity.DisplayRowCount
         };
 }

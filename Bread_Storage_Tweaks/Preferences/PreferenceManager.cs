@@ -8,8 +8,9 @@ public static class PreferenceManager
     {
         Directory.CreateDirectory(Utils.PreferencePath);
 
-        StorageRacks.Init();
-        Extra.Init();
         Cars.Init();
+        Employees.Init();
+        Extra.Init();
+        StorageRacks.Init();
     }
 }

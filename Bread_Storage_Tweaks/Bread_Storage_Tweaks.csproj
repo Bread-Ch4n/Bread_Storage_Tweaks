@@ -27,35 +27,36 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Compile Include="AssemblyInfo.cs" />
+        <Compile Include="AssemblyInfo.cs"/>
         <Compile Include="Main.cs"/>
-        <Compile Include="Preferences\Classes\Cars.cs" />
-        <Compile Include="Preferences\Classes\Extra.cs" />
-        <Compile Include="Preferences\Classes\StorageRacks.cs" />
-        <Compile Include="Preferences\PreferenceManager.cs" />
-        <Compile Include="Utils.cs" />
+        <Compile Include="Preferences\Classes\Cars.cs"/>
+        <Compile Include="Preferences\Classes\Employees.cs"/>
+        <Compile Include="Preferences\Classes\Extra.cs"/>
+        <Compile Include="Preferences\Classes\StorageRacks.cs"/>
+        <Compile Include="Preferences\PreferenceManager.cs"/>
+        <Compile Include="Utils.cs"/>
     </ItemGroup>
 
     <ItemGroup>
-      <Reference Include="Assembly-CSharp">
-        <HintPath>..\..\..\..\..\SteamLibrary\steamapps\common\Schedule I\MelonLoader\Il2CppAssemblies\Assembly-CSharp.dll</HintPath>
-        <Private>False</Private>
-      </Reference>
-      <Reference Include="Il2CppFishNet.Runtime">
-        <HintPath>..\..\..\..\..\SteamLibrary\steamapps\common\Schedule I\MelonLoader\Il2CppAssemblies\Il2CppFishNet.Runtime.dll</HintPath>
-        <Private>False</Private>
-      </Reference>
-      <Reference Include="Il2Cppmscorlib">
-        <HintPath>..\..\..\..\..\SteamLibrary\steamapps\common\Schedule I\MelonLoader\Il2CppAssemblies\Il2Cppmscorlib.dll</HintPath>
-        <Private>False</Private>
-      </Reference>
-      <Reference Include="UnityEngine.CoreModule">
-        <HintPath>..\..\..\..\..\SteamLibrary\steamapps\common\Schedule I\MelonLoader\Il2CppAssemblies\UnityEngine.CoreModule.dll</HintPath>
-        <Private>False</Private>
-      </Reference>
-      <Reference Include="UnityEngine.UI">
-        <HintPath>..\..\..\..\..\SteamLibrary\steamapps\common\Schedule I\MelonLoader\Il2CppAssemblies\UnityEngine.UI.dll</HintPath>
-        <Private>False</Private>
-      </Reference>
+        <Reference Include="Assembly-CSharp">
+            <HintPath>..\..\..\..\..\SteamLibrary\steamapps\common\Schedule I\MelonLoader\Il2CppAssemblies\Assembly-CSharp.dll</HintPath>
+            <Private>False</Private>
+        </Reference>
+        <Reference Include="Il2CppFishNet.Runtime">
+            <HintPath>..\..\..\..\..\SteamLibrary\steamapps\common\Schedule I\MelonLoader\Il2CppAssemblies\Il2CppFishNet.Runtime.dll</HintPath>
+            <Private>False</Private>
+        </Reference>
+        <Reference Include="Il2Cppmscorlib">
+            <HintPath>..\..\..\..\..\SteamLibrary\steamapps\common\Schedule I\MelonLoader\Il2CppAssemblies\Il2Cppmscorlib.dll</HintPath>
+            <Private>False</Private>
+        </Reference>
+        <Reference Include="UnityEngine.CoreModule">
+            <HintPath>..\..\..\..\..\SteamLibrary\steamapps\common\Schedule I\MelonLoader\Il2CppAssemblies\UnityEngine.CoreModule.dll</HintPath>
+            <Private>False</Private>
+        </Reference>
+        <Reference Include="UnityEngine.UI">
+            <HintPath>..\..\..\..\..\SteamLibrary\steamapps\common\Schedule I\MelonLoader\Il2CppAssemblies\UnityEngine.UI.dll</HintPath>
+            <Private>False</Private>
+        </Reference>
     </ItemGroup>
 </Project>
