@@ -1,13 +1,17 @@
 ﻿using Bread_Storage_Tweaks.Preferences;
 using Bread_Storage_Tweaks.Preferences.Classes;
 using HarmonyLib;
+using Il2CppScheduleOne.Delivery;
 using Il2CppScheduleOne.Economy;
 using Il2CppScheduleOne.Employees;
 using Il2CppScheduleOne.ItemFramework;
 using Il2CppScheduleOne.NPCs;
 using Il2CppScheduleOne.Storage;
 using Il2CppScheduleOne.UI;
+using Il2CppScheduleOne.UI.Phone.Delivery;
 using MelonLoader;
+using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace Bread_Storage_Tweaks;
 
@@ -111,6 +115,64 @@ public class Main : MelonMod
             else __instance.SlotGridLayout.constraintCount = __instance.SlotGridLayout.constraintCount;
 
             __instance.Open(title, subtitle, owner);
+            return false;
+        }
+
+        [HarmonyPatch(typeof(StorageMenu), "Awake")]
+        [HarmonyPrefix]
+        private static void StorageEntityPatch(StorageMenu __instance)
+        {
+            if (Utils.MaxSlotAmount <= 20) return;
+            var slotsTransform = __instance.Container.gameObject.transform.Find("Slots");
+            if (slotsTransform == null) return;
+
+            var slotsUIsList = new List<ItemSlotUI>(__instance.SlotsUIs);
+
+            while (slotsTransform.childCount < Utils.MaxSlotAmount)
+                try
+                {
+                    var firstChild = slotsTransform.GetChild(0).gameObject;
+                    var clonedSlot = Object.Instantiate(firstChild, slotsTransform, true);
+                    clonedSlot.name =
+                        clonedSlot.name.Replace("Clone", $"Extra-[{(slotsTransform.childCount - 1).ToString()}]");
+
+                    clonedSlot.SetActive(true);
+
+                    clonedSlot.transform.localScale = Vector3.one;
+
+                    var itemSlotUI = clonedSlot.GetComponent<ItemSlotUI>() ?? clonedSlot.AddComponent<ItemSlotUI>();
+
+                    slotsUIsList.Add(itemSlotUI);
+                }
+                catch (Exception e)
+                {
+                    MelonLogger.Error(e);
+                }
+
+            __instance.SlotsUIs = slotsUIsList.ToArray();
+        }
+
+        [HarmonyPatch(typeof(DeliveryShop), "WillCartFitInVehicle")]
+        [HarmonyPrefix]
+        private static bool DeliveryVanPatch(DeliveryShop __instance, ref bool __result)
+        {
+            var num1 = 0;
+            foreach (var listingEntry in __instance.listingEntries)
+                if (listingEntry.SelectedQuantity != 0)
+                {
+                    var num2 = listingEntry.SelectedQuantity;
+                    var stackLimit = listingEntry.MatchingListing.Item.StackLimit;
+                    while (num2 > 0)
+                    {
+                        if (num2 > stackLimit)
+                            num2 -= stackLimit;
+                        else
+                            num2 = 0;
+                        ++num1;
+                    }
+                }
+
+            __result = num1 <= Extra.DeliveryVehicleSlotAmount!.Value;
             return false;
         }
     }

@@ -10,7 +10,6 @@ public static class Employees
     public static MelonPreferences_Entry<int>? CleanerSlotAmount;
     public static MelonPreferences_Entry<int>? HandlerSlotAmount;
 
-
     private static MelonPreferences_Category? _employeesRowAmountCategory;
     public static MelonPreferences_Entry<int>? BotanistRowAmount;
     public static MelonPreferences_Entry<int>? ChemistRowAmount;
@@ -22,18 +21,10 @@ public static class Employees
         _employeesSlotAmountCategory = MelonPreferences.CreateCategory("Employee Slots");
         _employeesSlotAmountCategory.SetFilePath(Path.Combine(Utils.PreferencePath, "Employees.cfg"));
 
-        BotanistSlotAmount = _employeesSlotAmountCategory.CreateEntry("Botanist Slot Amount", 5,
-            description:
-            "Do not make any values smaller or remove the mod. You will loose the items from the extra slots.\nThe max slot value is 20!");
+        BotanistSlotAmount = _employeesSlotAmountCategory.CreateEntry("Botanist Slot Amount", 5);
         ChemistSlotAmount = _employeesSlotAmountCategory.CreateEntry("Chemist Slot Amount", 5);
         CleanerSlotAmount = _employeesSlotAmountCategory.CreateEntry("Cleaner Slot Amount", 5);
         HandlerSlotAmount = _employeesSlotAmountCategory.CreateEntry("Handler Slot Amount", 5);
-
-        List<MelonPreferences_Entry<int>> sa =
-        [
-            HandlerSlotAmount, ChemistSlotAmount, BotanistSlotAmount, CleanerSlotAmount
-        ];
-        foreach (var saEntry in sa.Where(saEntry => saEntry.Value > 20)) saEntry.Value = 20;
 
         _employeesRowAmountCategory = MelonPreferences.CreateCategory("Employee Rows");
         _employeesRowAmountCategory.SetFilePath(Path.Combine(Utils.PreferencePath, "Employees.cfg"));
@@ -42,5 +33,9 @@ public static class Employees
         ChemistRowAmount = _employeesRowAmountCategory.CreateEntry("Chemist Row Amount", 1);
         CleanerRowAmount = _employeesRowAmountCategory.CreateEntry("Cleaner Row Amount", 1);
         HandlerRowAmount = _employeesRowAmountCategory.CreateEntry("Handler Row Amount", 1);
+
+        Utils.MaxSlotAmount = Math.Max(Utils.MaxSlotAmount,
+            ((List<MelonPreferences_Entry<int>>)
+                [BotanistSlotAmount!, ChemistSlotAmount!, CleanerSlotAmount!, HandlerSlotAmount!]).Max(x => x.Value));
     }
 }

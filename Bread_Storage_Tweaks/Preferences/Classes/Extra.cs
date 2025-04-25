@@ -10,11 +10,11 @@ public static class Extra
     public static MelonPreferences_Entry<int>? DeadDropSlotAmount;
     public static MelonPreferences_Entry<int>? DealerSlotAmount;
     public static MelonPreferences_Entry<int>? DeliveryBaySlotAmount;
+    public static MelonPreferences_Entry<int>? DeliveryVehicleSlotAmount;
     public static MelonPreferences_Entry<int>? DisplayCabinetSlotAmount;
     public static MelonPreferences_Entry<int>? SafeSlotAmount;
     public static MelonPreferences_Entry<int>? TableSlotAmount;
     public static MelonPreferences_Entry<int>? WallMountedShelfSlotAmount;
-
 
     private static MelonPreferences_Category? _extraRowAmountCategory;
     public static MelonPreferences_Entry<int>? BriefcaseRowAmount;
@@ -22,6 +22,7 @@ public static class Extra
     public static MelonPreferences_Entry<int>? DeadDropRowAmount;
     public static MelonPreferences_Entry<int>? DealerRowAmount;
     public static MelonPreferences_Entry<int>? DeliveryBayRowAmount;
+    public static MelonPreferences_Entry<int>? DeliveryVehicleRowAmount;
     public static MelonPreferences_Entry<int>? DisplayCabinetRowAmount;
     public static MelonPreferences_Entry<int>? SafeRowAmount;
     public static MelonPreferences_Entry<int>? TableRowAmount;
@@ -32,24 +33,16 @@ public static class Extra
         _extraSlotAmountCategory = MelonPreferences.CreateCategory("Extra Slots");
         _extraSlotAmountCategory.SetFilePath(Path.Combine(Utils.PreferencePath, "Extra.cfg"));
 
-        BriefcaseSlotAmount = _extraSlotAmountCategory.CreateEntry("Briefcase Slot Amount", 4,
-            description:
-            "Do not make any values smaller or remove the mod. You will loose the items from the extra slots.\nThe max slot value is 20!");
+        BriefcaseSlotAmount = _extraSlotAmountCategory.CreateEntry("Briefcase Slot Amount", 4);
         CoffeeTableSlotAmount = _extraSlotAmountCategory.CreateEntry("Coffee Table Slot Amount", 3);
         DeadDropSlotAmount = _extraSlotAmountCategory.CreateEntry("Dead Drop Slot Amount", 5);
         DealerSlotAmount = _extraSlotAmountCategory.CreateEntry("Dealer Inventory Slot Amount", 5);
         DeliveryBaySlotAmount = _extraSlotAmountCategory.CreateEntry("Delivery Bay Slot Amount", 5);
+        DeliveryVehicleSlotAmount = _extraSlotAmountCategory.CreateEntry("Delivery Vehicle Slot Amount", 16);
         DisplayCabinetSlotAmount = _extraSlotAmountCategory.CreateEntry("Display Cabinet Slot Amount", 4);
         SafeSlotAmount = _extraSlotAmountCategory.CreateEntry("Safe Slot Amount", 10);
         TableSlotAmount = _extraSlotAmountCategory.CreateEntry("Table Slot Amount", 3);
         WallMountedShelfSlotAmount = _extraSlotAmountCategory.CreateEntry("Wall-Mounted Shelf Slot Amount", 4);
-
-        List<MelonPreferences_Entry<int>> sa =
-        [
-            BriefcaseSlotAmount, DealerSlotAmount, DeliveryBaySlotAmount,
-            DeadDropSlotAmount, SafeSlotAmount, TableSlotAmount, CoffeeTableSlotAmount, DisplayCabinetSlotAmount
-        ];
-        foreach (var saEntry in sa.Where(saEntry => saEntry.Value > 20)) saEntry.Value = 20;
 
         _extraRowAmountCategory = MelonPreferences.CreateCategory("Extra Rows");
         _extraRowAmountCategory.SetFilePath(Path.Combine(Utils.PreferencePath, "Extra.cfg"));
@@ -59,11 +52,19 @@ public static class Extra
         DeadDropRowAmount = _extraRowAmountCategory.CreateEntry("Dead Drop Row Amount", 1);
         DealerRowAmount = _extraRowAmountCategory.CreateEntry("Dealer Inventory Row Amount", 1);
         DeliveryBayRowAmount = _extraRowAmountCategory.CreateEntry("Delivery Bay Row Amount", 1);
+        DeliveryVehicleRowAmount = _extraRowAmountCategory.CreateEntry("Delivery Vehicle Row Amount", 2);
         DisplayCabinetRowAmount = _extraRowAmountCategory.CreateEntry("Display Cabinet Row Amount", 1);
         SafeRowAmount =
             _extraRowAmountCategory.CreateEntry("Safe Row Amount", 1, oldIdentifier: "Safe Slot Row Amount");
         TableRowAmount =
             _extraRowAmountCategory.CreateEntry("Table Row Amount", 1, oldIdentifier: "Table Slot Row Amount");
         WallMountedShelfRowAmount = _extraRowAmountCategory.CreateEntry("Wall-Mounted Shelf Row Amount", 1);
+
+        Utils.MaxSlotAmount = Math.Max(Utils.MaxSlotAmount, ((List<MelonPreferences_Entry<int>>)
+        [
+            BriefcaseSlotAmount!, CoffeeTableSlotAmount!, DeadDropSlotAmount!,
+            DealerSlotAmount!, DeliveryBaySlotAmount!, DeliveryVehicleSlotAmount!, DisplayCabinetSlotAmount!,
+            SafeSlotAmount!, TableSlotAmount!, WallMountedShelfSlotAmount!
+        ]).Max(x => x.Value));
     }
 }
