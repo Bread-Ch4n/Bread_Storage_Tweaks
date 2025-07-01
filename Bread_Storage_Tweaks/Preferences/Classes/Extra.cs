@@ -6,6 +6,7 @@ public static class Extra
 {
     private static MelonPreferences_Category? _extraSlotAmountCategory;
     public static MelonPreferences_Entry<int>? BriefcaseSlotAmount;
+    public static MelonPreferences_Entry<int>? LockerSlotAmount;
     public static MelonPreferences_Entry<int>? CoffeeTableSlotAmount;
     public static MelonPreferences_Entry<int>? DeadDropSlotAmount;
     public static MelonPreferences_Entry<int>? DealerSlotAmount;
@@ -18,6 +19,7 @@ public static class Extra
 
     private static MelonPreferences_Category? _extraRowAmountCategory;
     public static MelonPreferences_Entry<int>? BriefcaseRowAmount;
+    public static MelonPreferences_Entry<int>? LockerRowAmount;
     public static MelonPreferences_Entry<int>? CoffeeRowAmount;
     public static MelonPreferences_Entry<int>? DeadDropRowAmount;
     public static MelonPreferences_Entry<int>? DealerRowAmount;
@@ -34,6 +36,7 @@ public static class Extra
         _extraSlotAmountCategory.SetFilePath(Path.Combine(Utils.PreferencePath, "Extra.cfg"));
 
         BriefcaseSlotAmount = _extraSlotAmountCategory.CreateEntry("Briefcase Slot Amount", 4);
+        LockerSlotAmount = _extraSlotAmountCategory.CreateEntry("Locker Slot Amount", 6);
         CoffeeTableSlotAmount = _extraSlotAmountCategory.CreateEntry("Coffee Table Slot Amount", 3);
         DeadDropSlotAmount = _extraSlotAmountCategory.CreateEntry("Dead Drop Slot Amount", 5);
         DealerSlotAmount = _extraSlotAmountCategory.CreateEntry("Dealer Inventory Slot Amount", 5);
@@ -48,6 +51,7 @@ public static class Extra
         _extraRowAmountCategory.SetFilePath(Path.Combine(Utils.PreferencePath, "Extra.cfg"));
 
         BriefcaseRowAmount = _extraRowAmountCategory.CreateEntry("Briefcase Row Amount", 1);
+        LockerRowAmount = _extraRowAmountCategory.CreateEntry("Locker Row Amount", 1);
         CoffeeRowAmount = _extraRowAmountCategory.CreateEntry("Coffee Table Row Amount", 1);
         DeadDropRowAmount = _extraRowAmountCategory.CreateEntry("Dead Drop Row Amount", 1);
         DealerRowAmount = _extraRowAmountCategory.CreateEntry("Dealer Inventory Row Amount", 1);

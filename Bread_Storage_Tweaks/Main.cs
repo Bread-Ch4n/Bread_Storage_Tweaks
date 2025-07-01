@@ -1,7 +1,6 @@
 ﻿using Bread_Storage_Tweaks.Preferences;
 using Bread_Storage_Tweaks.Preferences.Classes;
 using HarmonyLib;
-using Il2CppScheduleOne.Delivery;
 using Il2CppScheduleOne.Economy;
 using Il2CppScheduleOne.Employees;
 using Il2CppScheduleOne.ItemFramework;
@@ -44,6 +43,7 @@ public class Main : MelonMod
                 "Delivery Bay" => Extra.DeliveryBaySlotAmount!.Value,
                 "Display Cabinet" => Extra.DisplayCabinetSlotAmount!.Value,
                 "Large Storage Rack" => StorageRacks.LargeRackSlotAmount!.Value,
+                "Locker" => Extra.LockerSlotAmount!.Value,
                 "Medium Storage Rack" => StorageRacks.MediumRackSlotAmount!.Value,
                 "Safe" => Extra.SafeSlotAmount!.Value,
                 "Shitbox Trunk" => Cars.ShitBoxSlotAmount!.Value,
@@ -62,6 +62,7 @@ public class Main : MelonMod
                 "Delivery Bay" => Extra.DeliveryBayRowAmount!.Value,
                 "Display Cabinet" => Extra.DisplayCabinetRowAmount!.Value,
                 "Large Storage Rack" => StorageRacks.LargeRackRowAmount!.Value,
+                "Locker" => Extra.LockerRowAmount!.Value,
                 "Medium Storage Rack" => StorageRacks.MediumRackRowAmount!.Value,
                 "Safe" => Extra.SafeRowAmount!.Value,
                 "Shitbox Trunk" => Cars.ShitBoxRowAmount!.Value,
@@ -131,18 +132,12 @@ public class Main : MelonMod
             while (slotsTransform.childCount < Utils.MaxSlotAmount)
                 try
                 {
-                    var firstChild = slotsTransform.GetChild(0).gameObject;
-                    var clonedSlot = Object.Instantiate(firstChild, slotsTransform, true);
-                    clonedSlot.name =
-                        clonedSlot.name.Replace("Clone", $"Extra-[{(slotsTransform.childCount - 1).ToString()}]");
-
+                    var clonedSlot = Object.Instantiate(slotsTransform.GetChild(0).gameObject, slotsTransform, true);
+                    clonedSlot.name = clonedSlot.name.Replace("Clone", $"Extra-[{slotsTransform.childCount - 1}]");
                     clonedSlot.SetActive(true);
-
                     clonedSlot.transform.localScale = Vector3.one;
 
-                    var itemSlotUI = clonedSlot.GetComponent<ItemSlotUI>() ?? clonedSlot.AddComponent<ItemSlotUI>();
-
-                    slotsUIsList.Add(itemSlotUI);
+                    slotsUIsList.Add(clonedSlot.GetComponent<ItemSlotUI>() ?? clonedSlot.AddComponent<ItemSlotUI>());
                 }
                 catch (Exception e)
                 {
@@ -156,24 +151,40 @@ public class Main : MelonMod
         [HarmonyPrefix]
         private static bool DeliveryVanPatch(DeliveryShop __instance, ref bool __result)
         {
-            var num1 = 0;
-            foreach (var listingEntry in __instance.listingEntries)
-                if (listingEntry.SelectedQuantity != 0)
-                {
-                    var num2 = listingEntry.SelectedQuantity;
-                    var stackLimit = listingEntry.MatchingListing.Item.StackLimit;
-                    while (num2 > 0)
-                    {
-                        if (num2 > stackLimit)
-                            num2 -= stackLimit;
-                        else
-                            num2 = 0;
-                        ++num1;
-                    }
-                }
+            var totalStacks = 0;
 
-            __result = num1 <= Extra.DeliveryVehicleSlotAmount!.Value;
+            foreach (var entry in __instance.listingEntries)
+            {
+                if (entry.SelectedQuantity == 0)
+                    continue;
+
+                var quantity = entry.SelectedQuantity;
+                var stackLimit = entry.MatchingListing.Item.StackLimit;
+
+                totalStacks += (quantity + stackLimit - 1) / stackLimit;
+            }
+
+            __result = totalStacks <= Extra.DeliveryVehicleSlotAmount!.Value;
             return false;
+
+            // var num1 = 0;
+            // foreach (var listingEntry in __instance.listingEntries)
+            //     if (listingEntry.SelectedQuantity != 0)
+            //     {
+            //         var num2 = listingEntry.SelectedQuantity;
+            //         var stackLimit = listingEntry.MatchingListing.Item.StackLimit;
+            //         while (num2 > 0)
+            //         {
+            //             if (num2 > stackLimit)
+            //                 num2 -= stackLimit;
+            //             else
+            //                 num2 = 0;
+            //             ++num1;
+            //         }
+            //     }
+            //
+            // __result = num1 <= Extra.DeliveryVehicleSlotAmount!.Value;
+            // return false;
         }
     }
 }

@@ -50,12 +50,24 @@
             <HintPath>..\..\..\..\..\SteamLibrary\steamapps\common\Schedule I\MelonLoader\Il2CppAssemblies\Il2Cppmscorlib.dll</HintPath>
             <Private>False</Private>
         </Reference>
+        <Reference Include="UnityEngine">
+            <HintPath>..\..\..\..\..\SteamLibrary\steamapps\common\Schedule I\MelonLoader\Il2CppAssemblies\UnityEngine.dll</HintPath>
+            <Private>False</Private>
+        </Reference>
         <Reference Include="UnityEngine.CoreModule">
             <HintPath>..\..\..\..\..\SteamLibrary\steamapps\common\Schedule I\MelonLoader\Il2CppAssemblies\UnityEngine.CoreModule.dll</HintPath>
             <Private>False</Private>
         </Reference>
         <Reference Include="UnityEngine.UI">
             <HintPath>..\..\..\..\..\SteamLibrary\steamapps\common\Schedule I\MelonLoader\Il2CppAssemblies\UnityEngine.UI.dll</HintPath>
+            <Private>False</Private>
+        </Reference>
+        <Reference Include="UnityEngine.UIElementsModule">
+            <HintPath>..\..\..\..\..\SteamLibrary\steamapps\common\Schedule I\MelonLoader\Il2CppAssemblies\UnityEngine.UIElementsModule.dll</HintPath>
+            <Private>False</Private>
+        </Reference>
+        <Reference Include="UnityEngine.UIModule">
+            <HintPath>..\..\..\..\..\SteamLibrary\steamapps\common\Schedule I\MelonLoader\Il2CppAssemblies\UnityEngine.UIModule.dll</HintPath>
             <Private>False</Private>
         </Reference>
     </ItemGroup>
