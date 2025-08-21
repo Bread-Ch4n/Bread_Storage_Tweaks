@@ -166,25 +166,6 @@ public class Main : MelonMod
 
             __result = totalStacks <= Extra.DeliveryVehicleSlotAmount!.Value;
             return false;
-
-            // var num1 = 0;
-            // foreach (var listingEntry in __instance.listingEntries)
-            //     if (listingEntry.SelectedQuantity != 0)
-            //     {
-            //         var num2 = listingEntry.SelectedQuantity;
-            //         var stackLimit = listingEntry.MatchingListing.Item.StackLimit;
-            //         while (num2 > 0)
-            //         {
-            //             if (num2 > stackLimit)
-            //                 num2 -= stackLimit;
-            //             else
-            //                 num2 = 0;
-            //             ++num1;
-            //         }
-            //     }
-            //
-            // __result = num1 <= Extra.DeliveryVehicleSlotAmount!.Value;
-            // return false;
         }
     }
 }
