@@ -9,3 +9,15 @@ public static class Utils
 
     public static int MaxSlotAmount;
 }
+
+public class StorageEntityValues
+{
+    public int RowAmount;
+    public int SlotAmount;
+
+    public StorageEntityValues(int slotAmount, int rowAmount = 1)
+    {
+        RowAmount = rowAmount;
+        SlotAmount = slotAmount;
+    }
+}

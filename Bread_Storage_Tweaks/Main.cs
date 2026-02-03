@@ -1,8 +1,6 @@
 ﻿using Bread_Storage_Tweaks.Preferences;
-using Bread_Storage_Tweaks.Preferences.Classes;
+using Bread_Storage_Tweaks.Preferences.Storages;
 using HarmonyLib;
-using Il2CppScheduleOne.Economy;
-using Il2CppScheduleOne.Employees;
 using Il2CppScheduleOne.ItemFramework;
 using Il2CppScheduleOne.NPCs;
 using Il2CppScheduleOne.Storage;
@@ -35,43 +33,17 @@ public class Main : MelonMod
             var entityName = __instance.StorageEntityName;
             if (string.IsNullOrEmpty(entityName)) return;
 
-            __instance.SlotCount = entityName switch
-            {
-                "Briefcase" => Extra.BriefcaseSlotAmount!.Value,
-                "Coffee Table" => Extra.CoffeeTableSlotAmount!.Value,
-                "Dead Drop" => Extra.DeadDropSlotAmount!.Value,
-                "Delivery Bay" => Extra.DeliveryBaySlotAmount!.Value,
-                "Display Cabinet" => Extra.DisplayCabinetSlotAmount!.Value,
-                "Large Storage Rack" => StorageRacks.LargeRackSlotAmount!.Value,
-                "Locker" => Extra.LockerSlotAmount!.Value,
-                "Medium Storage Rack" => StorageRacks.MediumRackSlotAmount!.Value,
-                "Safe" => Extra.SafeSlotAmount!.Value,
-                "Shitbox Trunk" => Cars.ShitBoxSlotAmount!.Value,
-                "Small Storage Rack" => StorageRacks.SmallRackSlotAmount!.Value,
-                "Table" => Extra.TableSlotAmount!.Value,
-                "Trunk" => Cars.GetSA(__instance),
-                "Wall-Mounted Shelf" => Extra.WallMountedShelfSlotAmount!.Value,
-                _ => __instance.SlotCount
-            };
+            StorageEntityValues? values = null;
 
-            __instance.DisplayRowCount = entityName switch
-            {
-                "Briefcase" => Extra.BriefcaseRowAmount!.Value,
-                "Coffee Table" => Extra.CoffeeRowAmount!.Value,
-                "Dead Drop" => Extra.DeadDropRowAmount!.Value,
-                "Delivery Bay" => Extra.DeliveryBayRowAmount!.Value,
-                "Display Cabinet" => Extra.DisplayCabinetRowAmount!.Value,
-                "Large Storage Rack" => StorageRacks.LargeRackRowAmount!.Value,
-                "Locker" => Extra.LockerRowAmount!.Value,
-                "Medium Storage Rack" => StorageRacks.MediumRackRowAmount!.Value,
-                "Safe" => Extra.SafeRowAmount!.Value,
-                "Shitbox Trunk" => Cars.ShitBoxRowAmount!.Value,
-                "Small Storage Rack" => StorageRacks.SmallRackRowAmount!.Value,
-                "Table" => Extra.TableRowAmount!.Value,
-                "Trunk" => Cars.GetRA(__instance),
-                "Wall-Mounted Shelf" => Extra.WallMountedShelfRowAmount!.Value,
-                _ => __instance.DisplayRowCount
-            };
+            if (Cars.GetValues(__instance) != null) values = Cars.GetValues(__instance);
+            else if (Closets.GetValues(__instance) != null) values = Closets.GetValues(__instance);
+            else if (Extra.GetValues(__instance) != null) values = Extra.GetValues(__instance);
+            else if (StorageRacks.GetValues(__instance) != null) values = StorageRacks.GetValues(__instance);
+
+            values ??= new StorageEntityValues(__instance.SlotCount, __instance.DisplayRowCount);
+
+            __instance.SlotCount = values.SlotAmount;
+            __instance.DisplayRowCount = values.RowAmount;
         }
 
         [HarmonyPatch(typeof(NPCInventory), "Awake")]
@@ -80,16 +52,13 @@ public class Main : MelonMod
         {
             if (__instance == null) return;
 
-            if (__instance.GetComponentInParent<Botanist>())
-                __instance.SlotCount = Employees.BotanistSlotAmount!.Value;
-            else if (__instance.GetComponentInParent<Chemist>())
-                __instance.SlotCount = Employees.ChemistSlotAmount!.Value;
-            else if (__instance.GetComponentInParent<Cleaner>())
-                __instance.SlotCount = Employees.CleanerSlotAmount!.Value;
-            else if (__instance.GetComponentInParent<Dealer>())
-                __instance.SlotCount = Extra.DealerSlotAmount!.Value;
-            else if (__instance.GetComponentInParent<Packager>())
-                __instance.SlotCount = Employees.HandlerSlotAmount!.Value;
+            StorageEntityValues? values = null;
+
+            if (Employees.GetValues(__instance) != null) values = Employees.GetValues(__instance);
+
+            values ??= new StorageEntityValues(__instance.SlotCount);
+
+            __instance.SlotCount = values.SlotAmount;
         }
 
         [HarmonyPatch(typeof(StorageMenu), "Open", typeof(IItemSlotOwner), typeof(string), typeof(string))]
@@ -103,17 +72,13 @@ public class Main : MelonMod
             __instance.IsOpen = true;
             __instance.OpenedStorageEntity = null;
 
-            if (npcInventory.GetComponentInParent<Botanist>())
-                __instance.SlotGridLayout.constraintCount = Employees.BotanistRowAmount!.Value;
-            else if (npcInventory.GetComponentInParent<Chemist>())
-                __instance.SlotGridLayout.constraintCount = Employees.ChemistRowAmount!.Value;
-            else if (npcInventory.GetComponentInParent<Cleaner>())
-                __instance.SlotGridLayout.constraintCount = Employees.CleanerRowAmount!.Value;
-            else if (npcInventory.GetComponentInParent<Dealer>())
-                __instance.SlotGridLayout.constraintCount = Extra.DealerRowAmount!.Value;
-            else if (npcInventory.GetComponentInParent<Packager>())
-                __instance.SlotGridLayout.constraintCount = Employees.HandlerRowAmount!.Value;
-            else __instance.SlotGridLayout.constraintCount = __instance.SlotGridLayout.constraintCount;
+            StorageEntityValues? values = null;
+
+            if (Employees.GetValues(npcInventory) != null) values = Employees.GetValues(npcInventory);
+
+            values ??= new StorageEntityValues(npcInventory.SlotCount, __instance.SlotGridLayout.constraintCount);
+
+            __instance.SlotGridLayout.constraintCount = values.RowAmount;
 
             __instance.Open(title, subtitle, owner);
             return false;
@@ -164,7 +129,7 @@ public class Main : MelonMod
                 totalStacks += (quantity + stackLimit - 1) / stackLimit;
             }
 
-            __result = totalStacks <= Extra.DeliveryVehicleSlotAmount!.Value;
+            __result = totalStacks <= Cars._deliveryVan!.Value.SlotAmount;
             return false;
         }
     }

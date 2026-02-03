@@ -8,6 +8,7 @@
         <IsPackable>false</IsPackable>
         <LangVersion>latest</LangVersion>
         <GenerateDependencyFile>false</GenerateDependencyFile>
+        <DebugType>embedded</DebugType>
     </PropertyGroup>
 
     <ItemGroup>
@@ -17,8 +18,13 @@
     </ItemGroup>
 
     <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+        <Optimize>true</Optimize>
         <DebugType>none</DebugType>
         <DebugSymbols>false</DebugSymbols>
+        <GenerateDebugInfo>false</GenerateDebugInfo>
+        <DefineConstants>TRACE</DefineConstants>
+        <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+        <Deterministic>true</Deterministic>
     </PropertyGroup>
 
     <PropertyGroup>
@@ -29,46 +35,46 @@
     <ItemGroup>
         <Compile Include="AssemblyInfo.cs"/>
         <Compile Include="Main.cs"/>
-        <Compile Include="Preferences\Classes\Cars.cs"/>
-        <Compile Include="Preferences\Classes\Employees.cs"/>
-        <Compile Include="Preferences\Classes\Extra.cs"/>
-        <Compile Include="Preferences\Classes\StorageRacks.cs"/>
+        <Compile Include="Preferences\Storages\Cars.cs"/>
+        <Compile Include="Preferences\Storages\Closets.cs"/>
+        <Compile Include="Preferences\Storages\Employees.cs"/>
+        <Compile Include="Preferences\Storages\Extra.cs"/>
+        <Compile Include="Preferences\Storages\StorageRacks.cs"/>
         <Compile Include="Preferences\PreferenceManager.cs"/>
         <Compile Include="Utils.cs"/>
     </ItemGroup>
 
+    <PropertyGroup>
+        <LibFolder>..\..\..\..\..\SteamLibrary\steamapps\common\Schedule I\MelonLoader\Il2CppAssemblies</LibFolder>
+    </PropertyGroup>
+
     <ItemGroup>
         <Reference Include="Assembly-CSharp">
-            <HintPath>..\..\..\..\..\SteamLibrary\steamapps\common\Schedule I\MelonLoader\Il2CppAssemblies\Assembly-CSharp.dll</HintPath>
-            <Private>False</Private>
+            <HintPath>$(LibFolder)\Assembly-CSharp.dll</HintPath>
         </Reference>
         <Reference Include="Il2CppFishNet.Runtime">
-            <HintPath>..\..\..\..\..\SteamLibrary\steamapps\common\Schedule I\MelonLoader\Il2CppAssemblies\Il2CppFishNet.Runtime.dll</HintPath>
-            <Private>False</Private>
+            <HintPath>$(LibFolder)\Il2CppFishNet.Runtime.dll</HintPath>
         </Reference>
         <Reference Include="Il2Cppmscorlib">
-            <HintPath>..\..\..\..\..\SteamLibrary\steamapps\common\Schedule I\MelonLoader\Il2CppAssemblies\Il2Cppmscorlib.dll</HintPath>
-            <Private>False</Private>
+            <HintPath>$(LibFolder)\Il2Cppmscorlib.dll</HintPath>
         </Reference>
         <Reference Include="UnityEngine">
-            <HintPath>..\..\..\..\..\SteamLibrary\steamapps\common\Schedule I\MelonLoader\Il2CppAssemblies\UnityEngine.dll</HintPath>
-            <Private>False</Private>
+            <HintPath>$(LibFolder)\UnityEngine.dll</HintPath>
         </Reference>
         <Reference Include="UnityEngine.CoreModule">
-            <HintPath>..\..\..\..\..\SteamLibrary\steamapps\common\Schedule I\MelonLoader\Il2CppAssemblies\UnityEngine.CoreModule.dll</HintPath>
-            <Private>False</Private>
+            <HintPath>$(LibFolder)\UnityEngine.CoreModule.dll</HintPath>
         </Reference>
         <Reference Include="UnityEngine.UI">
-            <HintPath>..\..\..\..\..\SteamLibrary\steamapps\common\Schedule I\MelonLoader\Il2CppAssemblies\UnityEngine.UI.dll</HintPath>
-            <Private>False</Private>
+            <HintPath>$(LibFolder)\UnityEngine.UI.dll</HintPath>
         </Reference>
         <Reference Include="UnityEngine.UIElementsModule">
-            <HintPath>..\..\..\..\..\SteamLibrary\steamapps\common\Schedule I\MelonLoader\Il2CppAssemblies\UnityEngine.UIElementsModule.dll</HintPath>
-            <Private>False</Private>
+            <HintPath>$(LibFolder)\UnityEngine.UIElementsModule.dll</HintPath>
         </Reference>
         <Reference Include="UnityEngine.UIModule">
-            <HintPath>..\..\..\..\..\SteamLibrary\steamapps\common\Schedule I\MelonLoader\Il2CppAssemblies\UnityEngine.UIModule.dll</HintPath>
-            <Private>False</Private>
+            <HintPath>$(LibFolder)\UnityEngine.UIModule.dll</HintPath>
+        </Reference>
+        <Reference Update="@(Reference)">
+            <Private>false</Private>
         </Reference>
     </ItemGroup>
 </Project>

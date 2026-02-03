@@ -1,4 +1,4 @@
-using Bread_Storage_Tweaks.Preferences.Classes;
+using Bread_Storage_Tweaks.Preferences.Storages;
 
 namespace Bread_Storage_Tweaks.Preferences;
 
@@ -12,5 +12,6 @@ public static class PreferenceManager
         Employees.Init();
         Extra.Init();
         StorageRacks.Init();
+        Closets.Init();
     }
 }
