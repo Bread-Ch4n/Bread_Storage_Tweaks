@@ -44,35 +44,8 @@
         <Compile Include="Utils.cs"/>
     </ItemGroup>
 
-    <PropertyGroup>
-        <LibFolder>..\..\..\..\..\SteamLibrary\steamapps\common\Schedule I\MelonLoader\Il2CppAssemblies</LibFolder>
-    </PropertyGroup>
-
     <ItemGroup>
-        <Reference Include="Assembly-CSharp">
-            <HintPath>$(LibFolder)\Assembly-CSharp.dll</HintPath>
-        </Reference>
-        <Reference Include="Il2CppFishNet.Runtime">
-            <HintPath>$(LibFolder)\Il2CppFishNet.Runtime.dll</HintPath>
-        </Reference>
-        <Reference Include="Il2Cppmscorlib">
-            <HintPath>$(LibFolder)\Il2Cppmscorlib.dll</HintPath>
-        </Reference>
-        <Reference Include="UnityEngine">
-            <HintPath>$(LibFolder)\UnityEngine.dll</HintPath>
-        </Reference>
-        <Reference Include="UnityEngine.CoreModule">
-            <HintPath>$(LibFolder)\UnityEngine.CoreModule.dll</HintPath>
-        </Reference>
-        <Reference Include="UnityEngine.UI">
-            <HintPath>$(LibFolder)\UnityEngine.UI.dll</HintPath>
-        </Reference>
-        <Reference Include="UnityEngine.UIElementsModule">
-            <HintPath>$(LibFolder)\UnityEngine.UIElementsModule.dll</HintPath>
-        </Reference>
-        <Reference Include="UnityEngine.UIModule">
-            <HintPath>$(LibFolder)\UnityEngine.UIModule.dll</HintPath>
-        </Reference>
+        <Reference Include="./Libs/**/*.dll"/>
         <Reference Update="@(Reference)">
             <Private>false</Private>
         </Reference>
